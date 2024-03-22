@@ -4,10 +4,10 @@ from src.Figure import Figure
 class Circle(Figure):
     """Circle class use radius for calculate area"""
 
-    def __init__(self, radius: int):
+    def __init__(self, radius: int | float):
         super().__init__(name="Circle")
-        if type(radius) != int:
-            raise AttributeError("radius should have type int")
+        if type(radius) not in [int, float]:
+            raise AttributeError("radius should have type int or float")
         if radius <= 0:
             raise ValueError("radius should be greate than 0")
         self.radius = radius
@@ -18,4 +18,3 @@ class Circle(Figure):
 
     def get_perimeter(self):
         pass
-
