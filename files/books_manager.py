@@ -6,38 +6,37 @@ from files import CSV_FILE_PATH
 with open(JSON_FILE_PATH, "r") as f:
     users = json.load(f)
 
-    Lst = []
+    users_list = []
     for user in users:
-        dict_short = dict()
-        dict_short['name'] = user['name']
-        dict_short['gender'] = user['gender']
-        dict_short['address'] = user['address']
-        dict_short['age'] = user['age']
-        Lst.append(dict_short)
+        dict_users = dict()
+        dict_users['name'] = user['name']
+        dict_users['gender'] = user['gender']
+        dict_users['address'] = user['address']
+        dict_users['age'] = user['age']
+        dict_users['books'] = []
+        users_list.append(dict_users)
 
-with open(CSV_FILE_PATH, newline='') as f:
-    books_reader = DictReader(f)
+with open(CSV_FILE_PATH, newline='') as data:
+    books_reader = DictReader(data)
 
-    books = []
+    books_list = []
     for item in books_reader:
         dict_books = dict()
         dict_books['title'] = item['Title']
         dict_books['author'] = item['Author']
         dict_books['pages'] = item['Pages']
         dict_books['genre'] = item['Genre']
-        books.append(dict_books)
+        books_list.append(dict_books)
 
-while books:
-    for user in Lst:
-        it = iter(books)
-        try:
-            one_book = next(it)
-            user['book'] = one_book
-            del one_book
-            print(user)
-        except StopIteration:
-            print('Iteration is over')
+    i = 0
+    total = len(users_list)
+    it = iter(books_list)
+    for row in books_list:
+        users_list[i]["books"].append(next(it))
+        i = i + 1
+        if i == total:
+            i = 0
 
-# with open("result.json", "w") as f:
-#     s = json.dumps(Lst, indent=4)
-#     f.write(s)
+with open("result.json", "w") as final:
+    data = json.dumps(users_list, indent=4)
+    final.write(data)
