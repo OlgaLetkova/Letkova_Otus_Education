@@ -2,7 +2,8 @@ import pytest
 from jsonschema import validate
 
 from file_helpers.csv_helper import read_lines_from_csv
-from schemas import schema_one_resource
+from files import DATA_RESOURCES_CSV_FILE_PATH
+from schemas import SCHEMA_ONE_RESOURCE
 from pydantic import BaseModel
 
 
@@ -18,7 +19,7 @@ def test_get_all_resources(placeholder_api_client):
     assert json_response
     assert response.ok
     for resource in json_response:
-        validate(instance=resource, schema=schema_one_resource)
+        validate(instance=resource, schema=SCHEMA_ONE_RESOURCE)
     assert len(json_response) == 100
 
 
@@ -31,12 +32,12 @@ def test_create_one_resource(placeholder_api_client):
     response = placeholder_api_client.create_one_resource(data=dict(data))
     json_response = response.json()
     assert response.ok
-    validate(instance=json_response, schema=schema_one_resource)
+    validate(instance=json_response, schema=SCHEMA_ONE_RESOURCE)
     assert json_response["id"] == 101
     assert response.headers["Content-type"] == headers["Content-type"].lower()
 
 
-@pytest.mark.parametrize("data", read_lines_from_csv())
+@pytest.mark.parametrize("data", read_lines_from_csv(source_file=DATA_RESOURCES_CSV_FILE_PATH))
 def test_update_one_resource(placeholder_api_client, data):
     headers = {"Content-type": "application/json; charset=UTF-8"}
     response = placeholder_api_client.update_one_resource(data=data, resource_number=data["id"])

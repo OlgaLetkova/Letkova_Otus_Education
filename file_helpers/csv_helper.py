@@ -1,11 +1,11 @@
 import csv
 
-from files import CSV_FILE_PATH
+from files import DATA_RESOURCES_CSV_FILE_PATH
 
 
-def read_lines_from_csv(limit=100):
+def read_lines_from_csv(limit=100, source_file=DATA_RESOURCES_CSV_FILE_PATH):
     result = []
-    with open(CSV_FILE_PATH, "r") as csv_file:
+    with open(source_file, "r") as csv_file:
         reader = csv.DictReader(csv_file)
         for row in reader:
             result.append(row)

@@ -1,7 +1,7 @@
 import pytest
 from jsonschema import validate
 
-from schemas import schema_one_brewery
+from schemas import SCHEMA_ONE_BREWERY
 
 
 @pytest.mark.parametrize(("_id", "code", "name"),
@@ -13,7 +13,7 @@ def test_get_single_brewery_by_id(brewery_api_client, _id, code, name):
     assert json_response['id'] == _id
     assert response.status_code == code
     assert json_response['name'] == name
-    validate(instance=json_response, schema=schema_one_brewery)
+    validate(instance=json_response, schema=SCHEMA_ONE_BREWERY)
 
 
 def test_get_brewery_by_city(brewery_api_client):
@@ -42,9 +42,13 @@ def test_get_brewery_by_state(brewery_api_client, state, code):
         assert brewery["state"] == state
 
 
-def test_get_brewery_by_ids(brewery_api_client, brewery_data):
-    _id, name, code, website_url = brewery_data
-    query = {"by_ids": brewery_data[0]}
+@pytest.mark.parametrize(("_id", "name", "code", "website_url"),
+                         [("06e9fffb-e820-45c9-b107-b52b51013e8f", "12Degree Brewing", 200, "http://www.12degree.com"),
+                          ("701239cb-5319-4d2e-92c1-129ab0b3b440", "Bière de la Plaine", 200,
+                           "https://brasseriedelaplaine.fr/")
+                          ])
+def test_get_brewery_by_ids(brewery_api_client, _id, name, code, website_url):
+    query = {"by_ids": _id}
     response = brewery_api_client.get_brewery_by_ids(query)
     json_response = response.json()
     assert json_response

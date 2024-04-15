@@ -1,5 +1,4 @@
 import pytest
-import requests
 
 from src.api_clients.brewery_api_client import BreweryApiClient
 from src.api_clients.dog_api_client import DogsApiClient
@@ -37,26 +36,10 @@ def dog_api_client():
     return client
 
 
-@pytest.fixture(params=[("afghan", "success", 200, "jpg"),
-                        ("blood", "success", 200, "jpg"),
-                        ("walker", "success", 200, "jpg")])
-def dog_data(request):
-    sub_breed, status, code, image_format = request.param
-    yield sub_breed, status, code, image_format
-
-
 @pytest.fixture(scope="session")
 def brewery_api_client():
     client = BreweryApiClient()
     return client
-
-
-@pytest.fixture(params=[("06e9fffb-e820-45c9-b107-b52b51013e8f", "12Degree Brewing", 200, "http://www.12degree.com"),
-                        ("701239cb-5319-4d2e-92c1-129ab0b3b440", "Bière de la Plaine", 200,
-                         "https://brasseriedelaplaine.fr/")])
-def brewery_data(request):
-    _id, name, code, website_url = request.param
-    yield _id, name, code, website_url
 
 
 @pytest.fixture(scope="session")

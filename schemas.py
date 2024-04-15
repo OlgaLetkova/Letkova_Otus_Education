@@ -1,4 +1,4 @@
-schema_list_all = {
+SCHEMA_LIST_ALL = {
     "type": "object",
     "properties": {
         "message": {"type": "object"},
@@ -6,7 +6,7 @@ schema_list_all = {
     }
 }
 
-schema_one_dog = {
+SCHEMA_ONE_DOG = {
     "type": "object",
     "properties": {
         "message": {"type": "string"},
@@ -14,7 +14,7 @@ schema_one_dog = {
     }
 }
 
-schema_list_all_sub_breeds = {
+SCHEMA_LIST_ALL_SUB_BREEDS = {
     "type": "object",
     "properties": {
         "message": {"type": "array"},
@@ -22,7 +22,7 @@ schema_list_all_sub_breeds = {
     }
 }
 
-schema_one_brewery = {
+SCHEMA_ONE_BREWERY = {
     "type": "object",
     "properties": {
         "id": {"type": "string"},
@@ -44,7 +44,7 @@ schema_one_brewery = {
     }
 }
 
-schema_one_resource = {
+SCHEMA_ONE_RESOURCE = {
     "type": "object",
     "properties": {
         "id": {"type": 'number'},
